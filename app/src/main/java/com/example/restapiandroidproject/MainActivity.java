@@ -70,18 +70,14 @@ public class MainActivity extends AppCompatActivity {
         booksApiCall.enqueue(new Callback<BookContainer>() {
             @Override
             public void onResponse(@NonNull Call<BookContainer> call, @NonNull Response<BookContainer> response) {
-                if (response.body() != null) {
-                    setupBookListView(response.body().getBookList());
-                }
+                setupBookListView(response.body().getBookList());
             }
 
             @Override
-            public void onFailure(@NonNull Call<BookContainer> call, @NonNull Throwable t) {
-                Snackbar.make(
-                        findViewById(R.id.main_view),
-                        "Something went wrong... Please try later!",
-                        BaseTransientBottomBar.LENGTH_LONG
-                ).show();
+            public void onFailure(Call<BookContainer> call, Throwable t) {
+                Snackbar.make(findViewById(R.id.main_view),
+                        "Something went wrong...",
+                        Snackbar.LENGTH_LONG).show();
             }
         });
     }
@@ -95,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
 
         final BookAdapter bookAdapter = new BookAdapter();
+
+        bookAdapter.setBooks(books);
 
         recyclerView.setAdapter(bookAdapter);
 
