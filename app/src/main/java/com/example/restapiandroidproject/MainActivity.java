@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -29,7 +30,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,11 +105,11 @@ public class MainActivity extends AppCompatActivity {
 
     private class BookHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private static final String IMAGE_URL_BASE = "http://covers.openlibrary.org/b/id/";
-
         private final TextView bookTitleTextView;
         private final TextView bookAuthorTextView;
         private final TextView numberOfPagesTextView;
         private final ImageView bookCover;
+        private Book book;
 
         public BookHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.book_list_item, parent, false));
@@ -118,10 +118,13 @@ public class MainActivity extends AppCompatActivity {
             bookAuthorTextView = itemView.findViewById(R.id.book_author);
             numberOfPagesTextView = itemView.findViewById(R.id.number_of_pages);
             bookCover = itemView.findViewById(R.id.img_cover);
+
+            itemView.setOnClickListener(this);
         }
 
         public void bind(Book book) {
             if (book != null && checkNullOrEmpty(book.getTitle()) && book.getAuthors() != null) {
+                this.book = book;
                 bookTitleTextView.setText(book.getTitle());
                 bookAuthorTextView.setText(TextUtils.join(", ", book.getAuthors()));
                 numberOfPagesTextView.setText(book.getNumberOfPages());
@@ -139,7 +142,13 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            // TODO: Implement onClick
+            // log
+            Log.d("MainActivity", "Book clicked: " + book.getTitle());
+            Intent intent = new Intent(MainActivity.this, BookDetailsActivity.class);
+            intent.putExtra(BookDetailsActivity.EXTRA_BOOK_DETAILS_TITLE, bookTitleTextView.getText());
+            intent.putExtra(BookDetailsActivity.EXTRA_BOOK_DETAILS_AUTHOR, bookAuthorTextView.getText());
+            intent.putExtra(BookDetailsActivity.EXTRA_BOOK_DETAILS_COVER_ID, book.getCover());
+            startActivity(intent);
         }
     }
 

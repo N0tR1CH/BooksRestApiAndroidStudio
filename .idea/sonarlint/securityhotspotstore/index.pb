@@ -15,3 +15,5 @@ t
 Dapp/src/main/java/com/example/restapiandroidproject/BookService.java,4\4\44d2501e82a60a13ae92ca3cfbad814dc66d2272
 @
 build.gradle.kts,d\b\dbcff70658daf80b53ce624f6adcaa529df5ed8d
+|
+Lapp/src/main/java/com/example/restapiandroidproject/BookDetailsActivity.java,a\c\ac97ef0d3b7625ee5b415a69a020801e68962b97
