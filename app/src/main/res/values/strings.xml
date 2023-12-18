@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">RestApiAndroidProject</string>
+    <string name="book_cover">Book cover</string>
 </resources>
